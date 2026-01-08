@@ -17,6 +17,7 @@ pipeline {
         }
 
         stage('Build Docker Image') {
+        
             steps {
                 sh 'docker build -t $DOCKER_IMAGE:$DOCKER_TAG .'
             }
@@ -37,13 +38,5 @@ pipeline {
             }
         }
 
-        stage('Deploy Container') {
-            steps {
-                sh '''
-                docker rm -f devops-node-app || true
-                docker run -d -p 3000:3000 --name devops-node-app $DOCKER_IMAGE:$DOCKER_TAG
-                '''
-            }
-        }
     }
 }
